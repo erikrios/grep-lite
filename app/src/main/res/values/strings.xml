@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="selamat_datang">SELAMAT DATANG</string>
+    <string name="login_sukses">Login Sukses!</string>
+</resources>
