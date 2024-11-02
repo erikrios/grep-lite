@@ -2,6 +2,8 @@
 name = "grep-lite"
 version = "0.1.0"
 edition = "2021"
+authors = ["Erik Rio Setiawan <erikriosetiawan15@gmail.com>"]
 
 [dependencies]
+clap = "2"
 regex = "1"
