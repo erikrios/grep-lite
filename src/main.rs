@@ -1,6 +1,6 @@
 use std::{
     fs::File,
-    io::{BufRead, BufReader},
+    io::{self, BufRead, BufReader},
 };
 
 use clap::{App, Arg};
@@ -20,17 +20,27 @@ fn main() {
             Arg::with_name("input")
                 .help("File to search")
                 .takes_value(true)
-                .required(true),
+                .required(false),
         )
         .get_matches();
 
     let pattern = args.value_of("pattern").unwrap();
     let re = Regex::new(pattern).unwrap();
 
-    let input = args.value_of("input").unwrap();
-    let f = File::open(input).unwrap();
-    let reader = BufReader::new(f);
+    let input = args.value_of("input").unwrap_or("-");
 
+    if input == "-" {
+        let stdin = io::stdin();
+        let reader = stdin.lock();
+        process_lines(reader, re);
+    } else {
+        let f = File::open(input).unwrap();
+        let reader = BufReader::new(f);
+        process_lines(reader, re);
+    }
+}
+
+fn process_lines<T: BufRead + Sized>(reader: T, re: Regex) {
     for line_ in reader.lines() {
         let line = line_.unwrap();
         let contains_substring = re.find(&line);
